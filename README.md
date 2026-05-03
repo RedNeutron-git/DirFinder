@@ -95,5 +95,3 @@ New in v1.0:
 - And much more...
 
 ---
-
-> *Big respect for Mr Net0*
