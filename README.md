@@ -2,6 +2,8 @@
 Directory finder.<br>
 This tool can be used as the directory finder for the web application, API, and similiar of these. Feel free to use or modifiy it, but remember it's only for educational purpose.
 
+Latest version: https://github.com/RedNeutron-git/DirFinder/releases
+
 **Requirement**
 - Python V3 <br>
 In this trial, I was using Python 3.10.4.
