@@ -1,97 +1,77 @@
-# 🎯 DirFinder
+# 🎯 DirFinder v1.0
 
-> Fast and simple directory & file brute-forcer for web applications, APIs, and more.
+> Fast, feature-rich directory and file brute-forcer for bug bounty hunting.
 > **by RedNeutron**
 
-[![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Latest Release](https://img.shields.io/github/v/release/RedNeutron-git/DirFinder?label=Latest&color=cyan)](https://github.com/RedNeutron-git/DirFinder/releases/latest)
-
 ---
 
-## 📖 About
-
-DirFinder is a lightweight directory brute-forcing tool designed for bug bounty hunters and security researchers. Point it at a target, give it a wordlist, and it will discover hidden paths, files, and endpoints.
-
-> ⚠️ *For educational purpose only. Only use on targets you have explicit permission to test.*
-
----
-
-## 📦 Requirements
-
-- Python 3.x *(tested on Python 3.10.4)*
+## 🚀 Install
 
 ```bash
-pip install requests
+pip install requests rich colorama
 ```
 
----
-
-## 🚀 Quick Start
+## ⚡ Quick Start
 
 ```bash
-python3 dirfinder.py
-```
+# Basic scan (uses built-in wordlist)
+python dirfinder.py -u https://target.com
 
-Then follow the prompts:
+# Custom wordlist + extensions
+python dirfinder.py -u https://target.com -w wordlist.txt -e php bak html
 
-```
-Target URL: http://localhost:99
-Wordlist: wordlist.txt
+# Fast scan, 50 threads, HEAD method
+python dirfinder.py -u https://target.com -t 50 -X HEAD
+
+# Authenticated + save results
+python dirfinder.py -u https://target.com -c "session=abc123" -o results.txt
+
+# Full power
+python dirfinder.py -u https://target.com -w custom.txt -e php bak -t 30 --recurse --resume -o out.txt
 ```
 
 ---
 
-## 📺 Example Output
+## 🛠️ Options
 
-```
-┌──(kali㉿kali)-[~/Documents/DirFinder]
-└─$ python3 dirfinder.py
---------------------------
-DirFinder V0.0.1
-Author: RedNeutron
---------------------------
-
-Target URL: http://localhost:99
-Wordlist: wordlist.txt
-
-404 : http://localhost:99 / a
-404 : http://localhost:99 / ab
-404 : http://localhost:99 / abc
-404 : http://localhost:99 / 1
-404 : http://localhost:99 / 2
-404 : http://localhost:99 / 45c48cce2e2d7fbdea1afc51c7c6ad26
-200 : http://localhost:99 / admin   ← found!
-```
-
-> 💡 `wordlist.txt` is just a sample — you can use any wordlist you want.
-
----
-
-## 📂 Wordlist Tips
-
-| Wordlist | Description |
-|---|---|
-| `wordlist.txt` | Basic sample wordlist |
-| [SecLists](https://github.com/danielmiessler/SecLists) | Huge collection of wordlists |
-| [dirb](https://github.com/v0re/dirb) | Classic dirb wordlists |
+| Flag | Description | Default |
+|---|---|---|
+| `-u URL` | Target URL | required |
+| `-w FILE` | Custom wordlist (combines with built-in) | — |
+| `--no-builtin` | Disable built-in wordlist | off |
+| `-e EXT` | Extensions to append (php html bak) | — |
+| `-t N` | Threads | 20 |
+| `-X METHOD` | HTTP method: GET HEAD POST | GET |
+| `--timeout SEC` | Request timeout | 5s |
+| `-H HEADER` | Custom header | — |
+| `-c COOKIE` | Cookie string | — |
+| `-a TOKEN` | Authorization header | — |
+| `--user-agent UA` | Custom User-Agent | — |
+| `--follow-redirects` | Follow HTTP redirects | off |
+| `-d MIN MAX` | Random delay between requests | — |
+| `--recurse` | Scan found directories recursively | off |
+| `-mc CODE` | Only show these status codes | — |
+| `-o FILE` | Output file | auto |
+| `--resume` | Resume interrupted scan | off |
+| `-q` | Quiet mode | off |
 
 ---
 
-## 🔗 Latest Version
+## 📋 Built-in Wordlist
 
-A newer version with more features is available:
+300+ critical paths curated from real-world breaches:
 
-**[⬇ Download Latest Release →](https://github.com/RedNeutron-git/DirFinder/releases/latest)**
-
-New in v1.0:
-- Multi-threading (20x faster)
-- Built-in wordlist (300+ critical paths)
-- Color output + progress bar
-- Export results to TXT
-- Resume interrupted scans
-- Custom headers, cookies, auth
-- Recursive scanning
+- Source control: `.git/`, `.svn/`, `.env`
+- Config files: `wp-config.php`, `database.yml`, `secrets.json`
+- Admin panels: `admin/`, `phpmyadmin/`, `adminer.php`
+- Debug endpoints: `phpinfo.php`, `actuator/env`, `swagger.json`
+- Backup files: `backup.zip`, `db.sql`, `*.bak`
 - And much more...
 
+> *Big respect for Mr Net0*
+
 ---
+
+## ⚠️ Legal
+
+Only use on targets you have **explicit permission** to test.
